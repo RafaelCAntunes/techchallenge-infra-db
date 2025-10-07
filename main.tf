@@ -24,7 +24,7 @@ resource "aws_security_group" "rds_sg" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [data.terraform_remote_state.eks.outputs.eks_nodes_sg_id]
+    security_groups = [data.terraform_remote_state.eks.outputs.security_groups]
   }
 
   egress {
