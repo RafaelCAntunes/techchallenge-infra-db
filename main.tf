@@ -39,6 +39,16 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 
+resource "aws_security_group_rule" "allow_eks_nodes_to_rds" {
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+
+  security_group_id        = aws_security_group.rds_sg.id
+  source_security_group_id = var.eks_node_group_sg_id
+}
+
 # Subnet group do RDS (usando subnets privadas do EKS)
 resource "aws_db_subnet_group" "rds_subnets" {
   name       = "techchallenge-db-subnets"
