@@ -38,7 +38,7 @@ resource "aws_dynamodb_table" "pagamentos" {
   }
 }
 
-# Tabela de Produção (fila da cozinha)
+# Tabela do servico-producao (fila da cozinha)
 resource "aws_dynamodb_table" "producao" {
   name           = "techchallenge-producao"
   billing_mode   = "PROVISIONED"
