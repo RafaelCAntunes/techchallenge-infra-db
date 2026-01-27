@@ -2,3 +2,5 @@
 repositorio para configuração da infra do db do techchallenge
 
 O RDS está configurado para usar mysql
+
+Também cria uma instancia do dynamodb
