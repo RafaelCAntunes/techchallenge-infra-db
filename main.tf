@@ -20,6 +20,13 @@ resource "aws_security_group" "rds_sg" {
   description = "Allow EKS cluster access to RDS"
   vpc_id      = data.terraform_remote_state.eks.outputs.vpc_id
 
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [data.terraform_remote_state.eks.outputs.security_groups]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -32,15 +39,6 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 
-resource "aws_security_group_rule" "allow_eks_nodes_mysql" {
-  type                     = "ingress"
-  from_port                = 3306
-  to_port                  = 3306
-  protocol                 = "tcp"
-
-  security_group_id        = aws_security_group.rds_sg.id
-  source_security_group_id = data.terraform_remote_state.eks.outputs.security_groups
-}
 
 # Subnet group do RDS (usando subnets privadas do EKS)
 resource "aws_db_subnet_group" "rds_subnets" {
